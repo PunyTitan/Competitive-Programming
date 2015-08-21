@@ -21,6 +21,7 @@ public:
 double getSlope(Point &point1, Point &point2)
 {
 	double k;
+
 	k = 1.0 * (point1.y - point2.y) / (point1.x - point2.x);
 
 	return k;
@@ -55,12 +56,13 @@ int main(int argc, char const *argv[])
 {
 	vector< Point > points;
 	vector<double> slopes;
-	int numOfPoints, x, y, temp, largest = 0;
+	int numOfPoints, x, y, temp, largest;
 	int vertical;
 
 	cin >> numOfPoints;
 	while (numOfPoints != 0)
 	{
+		largest = 0;
 		for (int i = 0; i<numOfPoints; ++i)
 		{
 			cin >> x >> y;
@@ -69,30 +71,23 @@ int main(int argc, char const *argv[])
 
 		for (int i = 0; i + 1<numOfPoints; ++i)
 		{
-			if (largest >= numOfPoints - i)
-				break;
-
 			vertical = 1;
 			for (int j = i+1; j < numOfPoints; ++j)
 			{
-				if (points[j].x == points[i].x)
+				if (points[i].x == points[j].x)
 					++vertical;
 				else
 					slopes.push_back(getSlope(points[i], points[j]));
 			}
-
-			
+		
 
 			if (vertical>largest)
 				largest = vertical;
 			if (slopes.size()+1 > largest)
 			{
-				//cout << "here" << endl;
 				sort(slopes.begin(), slopes.end());
-				for(vector<int>::const_iterator itr = slopes.begin(); itr != slopes.end(); ++itr)
-					cout<<*itr<<" ";
 				temp = getMax(slopes);
-				//cout << "temp" << temp << endl;
+
 				if (temp>largest)
 					largest = temp;				
 			}
