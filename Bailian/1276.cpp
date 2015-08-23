@@ -1,6 +1,4 @@
 #include <iostream>
-#include <vector>
-#include <stdlib.h>
 #include <string.h>
 
 using namespace std;
@@ -12,14 +10,16 @@ int dkV[11];
 
 void ZeroOne(int cost)
 {
-	for(int i=cash; i>=cost; --i)
+	int i;
+	for(i=cash; i>=cost; --i)
 		if(cashV[i]<cashV[i-cost]+cost)
 			cashV[i] = cashV[i-cost]+cost;
 }
 
 void Complete(int cost)
 {
-	for(int i=cost; i<=cash; ++i)
+	int i;
+	for(i=cost; i<=cash; ++i)
 		if(cashV[i]<cashV[i-cost]+cost)
 			cashV[i] = cashV[i-cost]+cost;
 }
@@ -31,15 +31,14 @@ void Multiple(int cost, int count)
 	else
 	{
 		int k=1;
-		while(k<=count)
+		while(k<count)
 		{
 			count -= k;
 			ZeroOne(k*cost);
 			k *= 2;
 		}
 
-		if(count>0)
-			ZeroOne(count*cost);
+		ZeroOne(count*cost);
 	}
 }
 
@@ -47,11 +46,8 @@ int main(int argc, char const *argv[])
 {
 	int n;
 
-	cin>>cash;
-
-	while(true)
-	{
-		cin>>n;		
+	while(cin>>cash>>n)
+	{	
 
 		memset(cashV, 0, sizeof(cashV));
 
@@ -64,8 +60,6 @@ int main(int argc, char const *argv[])
 		}
 
 		cout<<cashV[cash]<<endl;
-		
-		cin>>cash;
 		
 	}
 
