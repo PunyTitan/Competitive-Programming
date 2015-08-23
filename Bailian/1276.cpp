@@ -1,48 +1,51 @@
 #include <iostream>
 #include <vector>
-#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 using namespace std;
 
 int cash;
+int cashV[100001];
+int nkV[11];
+int dkV[11];
 
-
-void ZeroOne(int cost, vector<int> & cashV)
+void ZeroOne(int cost)
 {
 	for(int i=cash; i>=cost; --i)
-		cashV[i] = cashV[i]<cashV[i-cost]+cost ? cashV[i-cost]+cost : cashV[i];
+		if(cashV[i]<cashV[i-cost]+cost)
+			cashV[i] = cashV[i-cost]+cost;
 }
 
-void Complete(int cost, vector<int> & cashV)
+void Complete(int cost)
 {
 	for(int i=cost; i<=cash; ++i)
-		cashV[i] = cashV[i]<cashV[i-cost]+cost ? cashV[i-cost]+cost : cashV[i];
+		if(cashV[i]<cashV[i-cost]+cost)
+			cashV[i] = cashV[i-cost]+cost;
 }
 
-void Multiple(int cost, int count, vector<int> & cashV)
+void Multiple(int cost, int count)
 {
 	if(cost*count >= cash)
-		Complete(cost, cashV);
+		Complete(cost);
 	else
 	{
 		int k=1;
 		while(k<=count)
 		{
 			count -= k;
-			ZeroOne(k*cost, cashV);
+			ZeroOne(k*cost);
 			k *= 2;
 		}
 
 		if(count>0)
-			ZeroOne(count*cost, cashV);
+			ZeroOne(count*cost);
 	}
 }
 
 int main(int argc, char const *argv[])
 {
-	vector<int> cashV(100001);
-	vector<int> nkV(11);
-	vector<int> dkV(11);
-	int n, nk, dk;
+	int n;
 
 	cin>>cash;
 
@@ -50,18 +53,14 @@ int main(int argc, char const *argv[])
 	{
 		cin>>n;		
 
-		fill(cashV.begin(), cashV.end(), 0);
+		memset(cashV, 0, sizeof(cashV));
 
 		for(int i=0; i<n; ++i)
-		{
-			cin>>nk>>dk;
-			nkV[i] = nk;
-			dkV[i] = dk;
-		}
+			cin>>nkV[i]>>dkV[i];
 		
 		for(int i=0; i<n; ++i)
 		{
-			Multiple(dkV[i], nkV[i], cashV);
+			Multiple(dkV[i], nkV[i]);
 		}
 
 		cout<<cashV[cash]<<endl;
