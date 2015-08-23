@@ -39,47 +39,35 @@ void Multiple(int cost, int count, vector<int> & cashV)
 
 int main(int argc, char const *argv[])
 {
-	vector<int> cashV;
-	vector<int> nkV;
-	vector<int> dkV;
+	vector<int> cashV(100001);
+	vector<int> nkV(11);
+	vector<int> dkV(11);
 	int n, nk, dk;
 
 	cin>>cash;
 
 	while(true)
 	{
-		cashV.resize(cash+1);
-		cin>>n;
+		cin>>n;		
 
-		if(n == 0 || cash == 0)
+		fill(cashV.begin(), cashV.end(), 0);
+
+		for(int i=0; i<n; ++i)
 		{
-			cout<<0<<endl;
-			cin.clear();
-            fflush(stdin);
+			cin>>nk>>dk;
+			nkV[i] = nk;
+			dkV[i] = dk;
 		}
-		else
+		
+		for(int i=0; i<n; ++i)
 		{
-			while(n-- != 0)
-			{
-				cin>>nk>>dk;
-				nkV.push_back(nk);
-				dkV.push_back(dk);
-			}
-
-			for(int i=0; i<nkV.size(); ++i)
-			{
-				Multiple(dkV[i], nkV[i], cashV);
-			}
-
-			cout<<cashV[cash]<<endl;
+			Multiple(dkV[i], nkV[i], cashV);
 		}
 
-
-
-		nkV.clear();
-		dkV.clear();
-		cashV.clear();
+		cout<<cashV[cash]<<endl;
+		
 		cin>>cash;
+		
 	}
 
 
