@@ -10,20 +10,6 @@ vector<char> charOfWords;
 vector< vector<bool> > flags;
 int N,M,P;
 
-
-/*void debugFlag(char c)
-{
-	cout<<endl<<"########################################"<<endl;
-	cout<<"current char:   "<<c<<endl;
-					for(int i=0; i<N; ++i)
-					{
-						for(int j=0; j<M; ++j)
-							cout<<flags[i][j]<<" ";
-						cout<<endl;
-					}
-					cout<<endl<<"########################################"<<endl;
-}
-*/
 /*
 	state: 0 for begin, 1 for other characters
 */
@@ -40,22 +26,19 @@ bool dfs(int state, int row, int col, vector<char>::const_iterator currentChar_i
 	//current character is the begin charactor of a word
 	if(state == 0)	
 	{
-		for(int i=0; i<M; ++i)
+		for(int i=0; i<N; ++i)
 		{
-			for(int j=0; j<N; ++j)
+			for(int j=0; j<M; ++j)
 			{
 				if(mistery[i][j] == *currentChar_itr && !flags[i][j])
 				{
 					flags[i][j] = true;
-					//debugFlag(*currentChar_itr);
 					next = dfs(1, i, j, currentChar_itr+1);
 					if(next)
 						return true;
-					else
-					{
+					else					
 						flags[i][j] = false;
-						//debugFlag(*currentChar_itr);
-					}
+					
 				}
 			}
 		}
@@ -69,60 +52,46 @@ bool dfs(int state, int row, int col, vector<char>::const_iterator currentChar_i
 		if(row-1>=0 && mistery[row-1][col]==*currentChar_itr && !flags[row-1][col])
 		{
 			flags[row-1][col] = true;
-			//debugFlag(*currentChar_itr);
 			next = dfs(1, row-1, col, currentChar_itr+1);
 			if(next)
 				return true;
-			else
-			{
+			else			
 				flags[row-1][col] = false;
-				//debugFlag(*currentChar_itr);
-			}
 		}
 
 		//down
-		else if(row+1<M && mistery[row+1][col]==*currentChar_itr && !flags[row+1][col])
+		if(row+1<N && mistery[row+1][col]==*currentChar_itr && !flags[row+1][col])
 		{
 			flags[row+1][col] = true;
-			//debugFlag(*currentChar_itr);
 			next = dfs(1, row+1, col, currentChar_itr+1);
 			if(next)
 				return true;
 			else
-			{
-				flags[row+1][col] = false;
-				//debugFlag(*currentChar_itr);
-			}
+				flags[row+1][col] = false;	
 		}
 
 		//left
-		else if(col-1>=0 && mistery[row][col-1]==*currentChar_itr && !flags[row][col-1])
+		if(col-1>=0 && mistery[row][col-1]==*currentChar_itr && !flags[row][col-1])
 		{
 			flags[row][col-1] = true;
-			//debugFlag(*currentChar_itr);
 			next = dfs(1, row, col-1, currentChar_itr+1);
 			if(next)
 				return true;
 			else
 			{
 				flags[row][col-1] = false;
-				//debugFlag(*currentChar_itr);
 			}
 		}
 
 		//right
-		else if(col+1<N && mistery[row][col+1]==*currentChar_itr && !flags[row][col+1])
+		if(col+1<M && mistery[row][col+1]==*currentChar_itr && !flags[row][col+1])
 		{
 			flags[row][col+1] = true;
-			//debugFlag(*currentChar_itr);
 			next = dfs(1, row, col+1, currentChar_itr+1);
 			if(next)
 				return true;
 			else
-			{
 				flags[row][col+1] = false;
-				//debugFlag(*currentChar_itr);
-			}
 		}
 
 		return false;
@@ -185,41 +154,11 @@ int main(int argc, char const *argv[])
 
 		for(vector<char>::const_iterator itr=result.begin(); itr!=result.end(); ++itr)
 			cout<<*itr;
-/*
-		cout<<endl<<"flag matrix: "<<endl;
-		for(int i=0; i<N; ++i)
-		{
-			for(int j=0; j<M; ++j)
-				cout<<flags[i][j]<<" ";
-			cout<<endl;
-		}
 
-		cout<<endl<<"mistery matrix: "<<endl;
-		for(int i=0; i<N; ++i)
-		{
-			for(int j=0; j<M; ++j)
-				cout<<mistery[i][j]<<" ";
-			cout<<endl;
-		}
-
-		cout<<"Char sequence:"<<endl;
-		for(int i=0; i<charOfWords.size(); ++i)
-			cout<<charOfWords[i]<<" ";*/
 
 	}
 	else
 		cout<<"Some word cannot be found"<<endl;
-
-/*	for(int i=0; i<N; ++i)
-	{
-		for(int j=0; j<M; ++j)
-			cout<<mistery[i][j]<<" ";
-		cout<<endl;
-	}
-
-	for(int i=0; i<charOfWords.size(); ++i)
-		cout<< charOfWords[i]<< " ";*/
-
 	
 	return 0;
 }
