@@ -10,7 +10,7 @@ void count(string str)
 {
 	for (int i = 0; i<str.length(); ++i)
 	{
-		if (str[i]>'A' && str[i]<'Z')
+		if (str[i]>='A' && str[i]<='Z')
 			++alphabet[str[i] - 'A'];
 	}
 }
@@ -31,14 +31,14 @@ int main(int argc, char const *argv[])
 	count(str4);
 
 	for (int i = 0; i<26; ++i)
-	if (alphabet[i]>maximum)
-		maximum = alphabet[i];
+		if (alphabet[i]>maximum)
+			maximum = alphabet[i];
 
 	for (int i = 0; i<maximum; ++i)
 	{
 		for (int j = 0; j<26; ++j)
 		{
-			if (maximum - alphabet[i] <= i)
+			if (maximum - alphabet[j] <= i)
 				cout << "*" << " ";
 			else
 				cout << "  ";
