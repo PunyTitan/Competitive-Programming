@@ -1,117 +1,86 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
+#include <algorithm>
 
 using namespace std;
 
-map<string, int> phoneNums;
+char map[] = "22233344455566677778889999";
+string current_phoneNum;
+vector<string> phoneNums;
 
-string phoneConvert(string phone)
+void phoneConvert(int index)
 {
 	int count = 0;
-	string result;
-	for (int i = 0; i<phone.length(); ++i)
+	string result = "        ";
+
+	for (int i = 0; i<current_phoneNum.length(); ++i)
 	{
-		if (phone[i] != '-')
-			++count;
-		if (phone[i] >= 'A' && phone[i] <= 'Z')
+		if (current_phoneNum[i] == '-')
+			continue;
+
+		if (count == 3)
 		{
-			switch (phone[i])
-			{
-			case 'A':
-			case 'B':
-			case 'C':
-				phone[i] = '2';
-				break;
-			case 'D':
-			case 'E':
-			case 'F':
-				phone[i] = '3';
-				break;
-			case 'G':
-			case 'H':
-			case 'I':
-				phone[i] = '4';
-				break;
-			case 'J':
-			case 'K':
-			case 'L':
-				phone[i] = '5';
-				break;
-			case 'M':
-			case 'N':
-			case 'O':
-				phone[i] = '6';
-				break;
-			case 'P':
-			case 'R':
-			case 'S':
-				phone[i] = '7';
-				break;
-			case 'T':
-			case 'U':
-			case 'V':
-				phone[i] = '8';
-				break;
-			case 'W':
-			case 'X':
-			case 'Y':
-				phone[i] = '9';
-				break;
-			}
+			result[count++] = '-';
 		}
+
+		if (current_phoneNum[i] >= 'A' && current_phoneNum[i] <= 'Z')
+		{
+			result[count++] = map[current_phoneNum[i]-'A'];
+		}
+		else
+			result[count++] = current_phoneNum[i];		
+		
 	}
 
-	result.resize(count + 1);
-	count = 0;
-
-	result[3] = '-';
-	for (int i = 0; i<phone.length(); ++i)
-	{
-		if (phone[i] != '-')
-		{
-			if (count == 3)
-				++count;
-			result[count++] = phone[i];
-		}
-	}
-
-	return result;
+	phoneNums[index] = result;
 }
 
 int main(int argc, char const *argv[])
 {
 	int n;
-	string current_phoneNum;
-	map<string, int>::iterator update_itr;
+	int count;
+	string previous_str;
+	bool duplicates = false;
 
 	cin >> n;
+	phoneNums.resize(n);
 
-	while (n-- != 0)
+	for (int i = 0; i < n; ++i)
 	{
 		cin >> current_phoneNum;
-		current_phoneNum = phoneConvert(current_phoneNum);
-
-		update_itr = phoneNums.find(current_phoneNum);
-		if (update_itr == phoneNums.end())
-			phoneNums[current_phoneNum] = 1;
-		else
-			++(update_itr->second);
+		phoneConvert(i);
 	}
 
-	bool noduplicates = true;
-	for (map<string, int>::const_iterator itr = phoneNums.begin(); itr != phoneNums.end(); ++itr)
+	sort(phoneNums.begin(), phoneNums.end());
+
+	count = 0;
+	previous_str = phoneNums[0];
+
+	for (int i = 0; i<phoneNums.size(); ++i)
 	{
-		if (itr->second > 1)
+		if (phoneNums[i] == previous_str)
+			++count;
+		else
 		{
-			cout << itr->first << " " << itr->second << endl;
-			noduplicates = false;
+			if (count > 1)
+			{
+				cout << previous_str << " " << count << endl;
+				duplicates = true;
+			}
+
+			previous_str = phoneNums[i];
+			count = 1;
 		}
-			
+	}
+	if (count>1)
+	{
+		cout << previous_str << " " << count << endl;
+		duplicates = true;
 	}
 
-	if (noduplicates)
+	if (!duplicates)
 		cout << "No duplicates." << endl;
+
 	return 0;
 }
