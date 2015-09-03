@@ -6,9 +6,9 @@
 
 using namespace std;
 
-vector<int> privateKey;
+vector<int> privateKey(200);
 
-string encrypt(int k, string str)
+void encrypt(int k, string & str)
 {
 	string result;
 	result.resize(str.length());
@@ -27,10 +27,8 @@ string encrypt(int k, string str)
 		}
 	}
 
-	if (k % 2 == 0)
-		return str;
-	else
-		return result;
+	if (k % 2 != 0)
+		str = result;
 }
 
 int main(int argc, char const *argv[])
@@ -45,32 +43,31 @@ int main(int argc, char const *argv[])
 		if (n == 0)
 			break;
 
-		privateKey.resize(n);
+
 		for (int i = 0; i < n; ++i)
 		{
 			cin >> privateKey[i];
 			--privateKey[i];
 		}
-		getchar();
 
-		while (getline(cin, current_str, '\n'))
+
+		while (cin>>k)
 		{
-			if (current_str[0] == '0')
+			if (k == 0)
 				break;
 
-			k = 0;
-			for (findK = 0; findK<current_str.length(); ++findK)
-			{
-				if (current_str[findK] == ' ')
-					break;
-				k *= 10;
-				k += current_str[findK] - '0';
-			}
-			current_str = current_str.substr(findK + 1, current_str.length() - findK - 1);
+			getchar();
+
+			getline(cin, current_str, '\n');
+			
 			current_str += string(n - current_str.length(), ' ');
 
-			cout << encrypt(k, current_str) << endl;
+			encrypt(k, current_str);
+
+			cout << current_str << endl;
 		}
+
+		cout<<endl;
 	}
 
 	return 0;
