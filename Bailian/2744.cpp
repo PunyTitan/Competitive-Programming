@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int maxlength = 0;
+int maxlength;
 
 bool containSubstr(string sub, string str)
 {
@@ -57,6 +57,7 @@ int main(int argc, char const *argv[])
 		cin>>n;
 		strs.resize(n);
 		minlength = 101;
+		maxlength = 0;
 
 		for(int i=0; i<n; ++i)
 		{
@@ -68,33 +69,22 @@ int main(int argc, char const *argv[])
 			}
 		}
 
-		cout<<"minlength_str: "<<minlength_str<<endl;
-		cout<<"minlength: "<<minlength<<endl;
-
-		//The beginning position of current search sub string 
 		for(int i=0; i<minlength; ++i)
 		{
-			cout<<"current search position: "<<i<<endl;	
-			//The length of current search sub string
 			for(int j=maxlength+1; j+i<=minlength; ++j)
 			{	
-				cout<<"current search length: "<<j<<endl;
 				current_subStr = minlength_str.substr(i, j);
-				cout<<"current sub string: "<<current_subStr<<endl;
 				count = 0;
-				for(int row = 0; row<n; ++n)
+				for(int row = 0; row<n; ++row)
 				{	
-					cout<<"inner search: "<<strs[row]<<endl;
 					if(containSubstr(current_subStr, strs[row]) || containSubstr(reverseStr(current_subStr), strs[row]))
 						++count;
 				}
 
-				cout<<"current count: "<<count<<endl;
 				if(count == n)
 					maxlength = j;
 				else
-					break;
-				cout<<"current maxlength: "<<maxlength<<endl;			
+					break;		
 			}
 		}
 
