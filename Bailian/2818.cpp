@@ -7,35 +7,54 @@
 using namespace std;
 
 vector<int> privateKey(200);
+vector<int> period(200);
+int n;
+
+void calculatePeriod()
+{
+	int index, count;
+	for (int i = 0; i<n; ++i)
+	{
+		index = i;
+		count = 0;
+		while (true)
+		{
+			index = privateKey[index];
+			++count;
+			if (index == i)
+				break;
+		}
+		period[i] = count;
+	}
+}
 
 void encrypt(int k, string & str)
 {
 	string result;
-	result.resize(str.length());
+	int current_k;
+	int index;
 
-	for (int i = 0; i<k; ++i)
+	str += string(n - str.length(), ' ');
+	result.resize(n);
+
+	for (int i = 0; i<n; ++i)
 	{
-		if (i % 2 == 0)
+		current_k = k%period[i];
+		index = i;
+		while (current_k-- != 0)
 		{
-			for (int j = 0; j<str.length(); ++j)
-				result[privateKey[j]] = str[j];
+			index = privateKey[index];
 		}
-		else
-		{
-			for (int j = 0; j<str.length(); ++j)
-				str[privateKey[j]] = result[j];
-		}
+		result[index] = str[i];
 	}
 
-	if (k % 2 != 0)
-		str = result;
+	str = result;
 }
 
 int main(int argc, char const *argv[])
 {
-	int n;
+
 	int k;
-	int findK;
 	string current_str;
 
 	while (cin >> n)
@@ -43,15 +62,15 @@ int main(int argc, char const *argv[])
 		if (n == 0)
 			break;
 
-
 		for (int i = 0; i < n; ++i)
 		{
 			cin >> privateKey[i];
 			--privateKey[i];
 		}
 
+		calculatePeriod();
 
-		while (cin>>k)
+		while (cin >> k)
 		{
 			if (k == 0)
 				break;
@@ -59,15 +78,13 @@ int main(int argc, char const *argv[])
 			getchar();
 
 			getline(cin, current_str, '\n');
-			
-			current_str += string(n - current_str.length(), ' ');
 
 			encrypt(k, current_str);
 
 			cout << current_str << endl;
 		}
 
-		cout<<endl;
+		cout << endl;
 	}
 
 	return 0;
