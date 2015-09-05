@@ -6,7 +6,17 @@
 using namespace std;
 
 vector< vector<int> > subStrNum;
-vector<bool> matched(201);
+
+int max(int x1, int x2, int x3)
+{
+	int maximum = x1;
+	if(x2>maximum)
+		maximum = x2;
+	if(x3>maximum)
+		maximum = x3;
+
+	return maximum;
+}
 
 int main(int argc, char const *argv[])
 {
@@ -24,20 +34,11 @@ int main(int argc, char const *argv[])
 
 	while (cin >> str1 >> str2)
 	{
-		fill(matched.begin(), matched.end(), false);
 		for (int i = 1; i <= str1.length(); ++i)
 		{
 			for (int j = 1; j <= str2.length(); ++j)
 			{
-				subStrNum[i][j] = subStrNum[i - 1][j]<subStrNum[i][j - 1] ? subStrNum[i][j - 1] : subStrNum[i - 1][j];
-				if (str1[i - 1] == str2[j - 1] && !matched[j])
-				{
-					++subStrNum[i][j];
-					matched[j] = true;
-					for (int index = j+1; index <= str2.length(); ++index)
-						subStrNum[i][index] = subStrNum[i][j]>subStrNum[i-1][index]? subStrNum[i][j] : subStrNum[i-1][index];
-					break;
-				}
+				subStrNum[i][j] = max(subStrNum[i-1][j], subStrNum[i][j-1], subStrNum[i-1][j-1]+(str1[i-1]==str2[j-1]));
 			}
 		}
 
