@@ -13,7 +13,7 @@ int main(int argc, char const *argv[])
 	int temp, i;
 	map<string, int> haabMonthMap;
 	haabMonthMap["pop"] = 0;
-	haabMonthMap["no"] = 1; 
+	haabMonthMap["no"] = 1;
 	haabMonthMap["zip"] = 2;
 	haabMonthMap["zotz"] = 3;
 	haabMonthMap["tzec"] = 4;
@@ -54,12 +54,12 @@ int main(int argc, char const *argv[])
 	tzoMonthMap[17] = "eznab";
 	tzoMonthMap[18] = "canac";
 	tzoMonthMap[19] = "ahau";
-	
+
 	int totalDay;
 	int dayTzo, monthTzo, yearTzo;
 
 	cin >> n;
-	cout << n;
+	cout << n<<endl;
 
 	while (n-- != 0)
 	{
