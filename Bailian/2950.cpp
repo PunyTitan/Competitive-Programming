@@ -12,7 +12,7 @@ public:
 	int y;
 	int count;
 
-	Node(int x=0, int y=0, int c=0):x(x), y(y), count(c)
+	Node(int x = 0, int y = 0, int c = 0) :x(x), y(y), count(c)
 	{}
 };
 
@@ -35,53 +35,49 @@ int main(int argc, char const *argv[])
 	int corn_count;
 	int distance;
 
-	cin>>T;
-	while(T--!=0)
+	cin >> T;
+	while (T-- != 0)
 	{
 		corn_count = 0;
 		distance = 0;
 
-		cin>>M>>N>>K;
+		cin >> M >> N >> K;
 
 		farm.clear();
 
-		for(int i=0; i<M; ++i)
-			for(int j=0; j<N; ++j)
-			{
-				cin>>current_count;
-				if(current_count != 0)
-					farm.push_back(Node(i, j, current_count));
-			}
-
-		cout<<"Flag1"<<endl;
+		for (int i = 0; i<M; ++i)
+		for (int j = 0; j<N; ++j)
+		{
+			cin >> current_count;
+			if (current_count != 0)
+				farm.push_back(Node(i, j, current_count));
+		}
 
 		sort(farm.begin(), farm.end(), cmp<Node>());
 
-		for(int i=0; i<farm.size(); ++i)
-		{
-			cout<<farm[i].x<<","<<farm[i].y<<" "farm[i].count<<endl;
-		}
+		for(int i=0; i<farm.size(); +=i)
+			cout<<farm[i].x<<","<<farm[i].y<<" "<<farm[i].count<<endl;
 
 		distance = 2;
 
-		for(int i=0; i<farm.size(); ++i)
+		for (int i = 0; i<farm.size(); ++i)
 		{
-			if(i==0)
+			if (i == 0)
 			{
-				if(distance + farm[i].y*2 + 1 > K)
+				if (distance + farm[i].y * 2 + 1 > K)
 					break;
-				distance += farm[i].y;
+				distance += farm[i].y + 1;
 				corn_count += farm[i].count;
 				continue;
 			}
 
-			if(distance + abs(farm[i].y-farm[i-1].y) + abs(farm[i].x-farm[i-1].x) + 1 + farm[i].y > K)
+			if (distance + abs(farm[i].y - farm[i - 1].y) + abs(farm[i].x - farm[i - 1].x) + 1 + farm[i].y > K)
 				break;
-			distance += abs(farm[i].y-farm[i-1].y) + abs(farm[i].x-farm[i-1].x);
+			distance += abs(farm[i].y - farm[i - 1].y) + abs(farm[i].x - farm[i - 1].x) + 1;
 			corn_count += farm[i].count;
 		}
 
-		cout<<corn_count<<endl;
+		cout << corn_count << endl;
 
 	}
 	return 0;
