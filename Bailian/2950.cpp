@@ -55,23 +55,20 @@ int main(int argc, char const *argv[])
 
 		sort(farm.begin(), farm.end(), cmp<Node>());
 
-		for(int i=0; i<farm.size(); +=i)
-			cout<<farm[i].x<<","<<farm[i].y<<" "<<farm[i].count<<endl;
-
 		distance = 2;
 
 		for (int i = 0; i<farm.size(); ++i)
 		{
 			if (i == 0)
 			{
-				if (distance + farm[i].y * 2 + 1 > K)
+				if (distance + farm[i].x * 2 + 1 > K)
 					break;
-				distance += farm[i].y + 1;
+				distance += farm[i].x + 1;
 				corn_count += farm[i].count;
 				continue;
 			}
 
-			if (distance + abs(farm[i].y - farm[i - 1].y) + abs(farm[i].x - farm[i - 1].x) + 1 + farm[i].y > K)
+			if (distance + abs(farm[i].y - farm[i - 1].y) + abs(farm[i].x - farm[i - 1].x) + 1 + farm[i].x > K)
 				break;
 			distance += abs(farm[i].y - farm[i - 1].y) + abs(farm[i].x - farm[i - 1].x) + 1;
 			corn_count += farm[i].count;
