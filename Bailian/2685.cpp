@@ -17,6 +17,8 @@ int main(int argc, char const *argv[])
 			sum += (int)pow(number%10, 3);
 			number /= 10;
 		}
+		if(sum == i)
+			cout<<i<<endl;
 	}
 	return 0;
 }
