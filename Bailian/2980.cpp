@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-	vector<int> result(410);
+	vector<int> result(450);
 	string str1, str2;
 	string long_str, short_str;
 	int next;
@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
 
 	long_len = long_str.length();
 	short_len = short_str.length();
-	result_len = long_len*short_len + 1;
+	result_len = long_len + short_len + 1;
 
 	int count = 0;
 	for (short_index = short_len - 1; short_index >= 0; --short_index, ++count)
@@ -65,9 +65,7 @@ int main(int argc, char const *argv[])
 	}
 
 	if (!valid)
-		cout << 0 << endl;
-	else
-		cout << endl;
+		cout << 0;
 
 	return 0;
 }
