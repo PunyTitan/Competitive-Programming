@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
 	for(int i=0; i<m; ++i)
 	{
 		temp = data[n-1];
-		for(int j=0; j<n-1; ++i)
+		for(int j=0; j<n-1; ++j)
 		{
 			data[n-1-j] = data[n-2-j];
 		}
