@@ -4,9 +4,9 @@
 
 using namespace std;
 
-int x, y, z;
+int x, y, z, p;
 
-void action(int p, int dis)
+void action(int dis)
 {
 	switch(p)
 	{
@@ -37,8 +37,7 @@ int main(int argc, char const *argv[])
 	int m, n;	
 	string command;
 	int distance;
-	int p;
-
+	
 	cin>>m;
 
 	while(m--!=0)
@@ -84,7 +83,7 @@ int main(int argc, char const *argv[])
 				p = forwardCor;
 			}
 			
-			action(p, distance);
+			action(distance);
 		}
 
 		cout<<x<<" "<<y<<" "<<z<<" "<<p<<endl;
