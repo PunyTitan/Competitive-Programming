@@ -8,6 +8,7 @@ int main(int argc, char const *argv[])
 {
 	vector<string> strs;
 	string current_str, subStr;
+	bool notMatch;
 
 	while (cin >> current_str)
 	{
@@ -19,7 +20,7 @@ int main(int argc, char const *argv[])
 		cout << strs[i] << " ";
 		for (int j = 1; j <= strs[i].length(); ++j)
 		{
-			bool notMatch = true;
+			notMatch = true;
 			subStr = strs[i].substr(0, j);
 
 			for (int k = 0; k<strs.size(); ++k)
