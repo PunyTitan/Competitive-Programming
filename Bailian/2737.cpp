@@ -5,6 +5,8 @@
 
 using namespace std;
 
+
+//subtract two string with the same length, or str2 is 1 less size than str1
 void strMinus(string & str1, string & str2)
 {
 	int next = 0;
@@ -23,8 +25,11 @@ void strMinus(string & str1, string & str2)
 		else
 		{
 			next = str1[i] - str2[i] + next;
-			str1[i] = 10 + next % 10 + '0';
-			next = -1 + next / 10;
+			if(next%10 == 0)
+				str1[i] = '0';
+			else
+				str1[i] = 10 + next % 10 + '0';
+			next = -1;
 		}
 	}
 
@@ -86,20 +91,17 @@ int main(int argc, char const *argv[])
 		}
 
 
-		/*cout<<"dividend: "<<dividend<<endl;
-		cout<<"divisor: "<<divisor<<endl;*/
-
+		//calculate result. current is the number to be divided now
 		result_index = divisor.length() - 1;
 		current = dividend.substr(0, result_index + 1);
 		while (result_index != dividend.length() - 1)
 		{
-			/*cout<<"current: "<<current<<" divisor: "<<divisor<<endl;*/
 
 			i = 0;
 			while (strLarger(current, divisor))
 			{
-				/*cout<<"In while: current: "<<current<<" divisor: "<<divisor<<endl;*/
 				strMinus(current, divisor);
+				//delete proceeding 0s
 				for (j = 0; j<current.length(); ++j)
 				{
 					if (current[j] != '0')
@@ -111,7 +113,7 @@ int main(int argc, char const *argv[])
 			}
 			result.push_back(i);
 
-			//delete all zeros in the front
+			//delete proceeding 0s
 			for (i = 0; i<current.length(); ++i)
 			{
 				if (current[i] != '0')
@@ -120,6 +122,7 @@ int main(int argc, char const *argv[])
 			if (i != 0)
 				current = current.substr(i, current.length() - i);
 
+			//add the next char to the current number
 			if(current.empty())
 			{
 				if(dividend[++result_index] == '0')
@@ -132,8 +135,6 @@ int main(int argc, char const *argv[])
 			}
 
 		}
-
-
 		i = 0;
 		while (strLarger(current, divisor))
 		{
@@ -150,6 +151,8 @@ int main(int argc, char const *argv[])
 		}
 		result.push_back(i);
 
+
+		//delete proceding 0s
 		for (i = 0; i<result.size(); ++i)
 		{
 			if (result[i] != 0)
@@ -157,6 +160,7 @@ int main(int argc, char const *argv[])
 			result[i] = -1;
 		}
 
+		//output the result
 		bool zero = true;
 		for (i = 0; i<result.size(); ++i)
 		{
