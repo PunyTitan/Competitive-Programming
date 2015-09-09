@@ -14,7 +14,7 @@ int main(int argc, char const *argv[])
 
 	for(int i=2; i<=n; ++i)
 	{
-		fact *= 1;
+		fact *= i;
 		result += 1.0/fact;
 	}
 
