@@ -113,15 +113,6 @@ int main(int argc, char const *argv[])
 			}
 			result.push_back(i);
 
-			//delete proceeding 0s
-			for (i = 0; i<current.length(); ++i)
-			{
-				if (current[i] != '0')
-					break;
-			}
-			if (i != 0)
-				current = current.substr(i, current.length() - i);
-
 			//add the next char to the current number
 			if(current.empty())
 			{
